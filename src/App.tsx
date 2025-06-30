@@ -1,18 +1,16 @@
-import {StatusBar, StyleSheet, useColorScheme, View} from 'react-native';
+import {ThemeProvider} from "./theme/ThemeContext.tsx";
 
+
+//todo: add data fetching
+//todo: add list screen
+//todo: add details screen
+//todo: add filtering
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  return (
-    <View style={styles.container}>
-    </View>
-  );
+    return (
+        <ThemeProvider>
+        </ThemeProvider>
+    );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 
 export default App;
