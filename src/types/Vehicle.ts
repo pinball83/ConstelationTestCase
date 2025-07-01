@@ -6,7 +6,7 @@ export interface Vehicle {
   fuelType: string;
   year: number;
   mileage: number;
-  auctionDateTime: string;
+  auctionDateTime: Date;
   startingBid: number;
   image: string;
   favorite: boolean;

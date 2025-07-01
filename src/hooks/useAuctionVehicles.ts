@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { vehiclesData } from '../data/vehicles';
 import { Vehicle } from '../types/Vehicle';
+import { parse } from 'date-fns';
 
 export function useAuctionVehicles(): {
   vehicles: Vehicle[];
@@ -25,6 +26,11 @@ export function useAuctionVehicles(): {
               id: index,
               fuelType: vehicle.fuel,
               image: 'https://via.placeholder.com/150',
+              auctionDateTime: parse(
+                vehicle.auctionDateTime,
+                'yyyy/MM/dd kk:mm:ss',
+                new Date(),
+              ),
               favorite: false, //todo add favorite to vehicles data from local storage
             } as Vehicle),
         );

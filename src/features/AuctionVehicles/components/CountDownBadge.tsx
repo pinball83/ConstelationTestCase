@@ -13,29 +13,23 @@ import { useTheme } from '../../../hooks/useTheme.ts';
 export default function CountDownBadge({
   auctionStartDate,
 }: {
-  auctionStartDate: string;
+  auctionStartDate: Date;
 }) {
   const [timeLeft, setTimeLeft] = useState('');
   const { colors, appStyles } = useTheme();
 
   useEffect(() => {
-    const auctionTime = parse(
-      auctionStartDate,
-      'yyyy/MM/dd kk:mm:ss',
-      new Date(),
-    );
-
     const updateCountdown = () => {
       const now = new Date();
 
-      if (isAfter(now, auctionTime)) {
+      if (isAfter(now, auctionStartDate)) {
         setTimeLeft('Auction started');
         return;
       }
 
-      const days = differenceInDays(auctionTime, now);
-      const hours = differenceInHours(auctionTime, now) % 24;
-      const minutes = differenceInMinutes(auctionTime, now) % 60;
+      const days = differenceInDays(auctionStartDate, now);
+      const hours = differenceInHours(auctionStartDate, now) % 24;
+      const minutes = differenceInMinutes(auctionStartDate, now) % 60;
 
       if (days > 0) {
         setTimeLeft(`${days}d ${hours}h ${minutes}m`);
