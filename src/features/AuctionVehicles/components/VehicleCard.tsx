@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Calendar, DollarSign, Fuel } from 'lucide-react-native';
 import { Vehicle } from '../../../types/Vehicle';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FavoriteButton } from './FavoriteButton';
 import CountDownBadge from './CountDownBadge';
 
@@ -34,11 +34,8 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   return (
     <View style={styles.card}>
       {/* Image Container */}
-      <View style={{ position: 'relative' }}>
-        <Image
-          source={{ uri: vehicle.image }}
-          style={{ width: '100%', height: 192, objectFit: 'cover' }}
-        />
+      <View style={styles.imageContainer}>
+        <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} />
 
         <FavoriteButton
           isFavorite={isFavorite}
@@ -49,133 +46,54 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
       </View>
 
       {/* Content */}
-      <View style={{ padding: 16 }}>
+      <View style={styles.content}>
         {/* Title */}
-        <Text
-          style={{
-            fontSize: 20,
-            fontWeight: 'bold',
-            color: '#111827',
-            marginBottom: 8,
-          }}
-        >
+        <Text style={styles.title}>
           {vehicle.year} {vehicle.make} {vehicle.model}
         </Text>
 
         {/* Details Grid */}
-        <View
-          style={{ flexDirection: 'row', flexWrap: 'wrap', marginBottom: 16 }}
-        >
-          <View
-            style={{
-              width: '50%',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <Fuel
-              style={{ width: 16, height: 16, marginRight: 4 }}
-              color="#4B5563"
-            />
-            <Text style={{ color: '#4B5563', fontSize: 14 }}>
-              {vehicle.fuelType}
-            </Text>
+        <View style={styles.detailsGrid}>
+          <View style={styles.detailItem}>
+            <Fuel style={styles.detailIcon} color="#4B5563" />
+            <Text style={styles.detailText}>{vehicle.fuelType}</Text>
           </View>
-          <View
-            style={{
-              width: '50%',
-              flexDirection: 'row',
-              alignItems: 'center',
-              marginBottom: 12,
-            }}
-          >
-            <Text
-              style={{
-                width: 16,
-                height: 16,
-                marginRight: 4,
-                textAlign: 'center',
-              }}
-            >
-              🛣️
-            </Text>
-            <Text style={{ color: '#4B5563', fontSize: 14 }}>
+          <View style={styles.detailItem}>
+            <Text style={styles.emojiIcon}>🛣️</Text>
+            <Text style={styles.detailText}>
               {formatMileage(vehicle.mileage)} mi
             </Text>
           </View>
-          <View
-            style={{ width: '50%', flexDirection: 'row', alignItems: 'center' }}
-          >
-            <Text
-              style={{
-                width: 16,
-                height: 16,
-                marginRight: 4,
-                textAlign: 'center',
-              }}
-            >
-              ⚙️
-            </Text>
-            <Text style={{ color: '#4B5563', fontSize: 14 }}>
-              {vehicle.engineSize}
-            </Text>
+          <View style={styles.detailItem}>
+            <Text style={styles.emojiIcon}>⚙️</Text>
+            <Text style={styles.detailText}>{vehicle.engineSize}</Text>
           </View>
-          <View
-            style={{ width: '50%', flexDirection: 'row', alignItems: 'center' }}
-          >
-            <Calendar
-              style={{ width: 16, height: 16, marginRight: 4 }}
-              color="#4B5563"
-            />
-            <Text style={{ color: '#4B5563', fontSize: 14 }}>
-              {vehicle.year}
-            </Text>
+          <View style={styles.detailItem}>
+            <Calendar style={styles.detailIcon} color="#4B5563" />
+            <Text style={styles.detailText}>{vehicle.year}</Text>
           </View>
         </View>
 
         {/* Starting Bid */}
-        <View
-          style={{
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            marginBottom: 16,
-          }}
-        >
-          <Text style={{ color: '#4B5563', fontSize: 14 }}>Starting Bid:</Text>
-          <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <DollarSign style={{ width: 20, height: 20 }} color="#059669" />
-            <Text
-              style={{ fontSize: 24, fontWeight: 'bold', color: '#059669' }}
-            >
+        <View style={styles.bidContainer}>
+          <Text style={styles.bidLabel}>Starting Bid:</Text>
+          <View style={styles.bidValueContainer}>
+            <DollarSign style={styles.bidIcon} color="#059669" />
+            <Text style={styles.bidValue}>
               {formatPrice(vehicle.startingBid).slice(1)}
             </Text>
           </View>
         </View>
 
         {/* View Details Button */}
-        <TouchableOpacity
+        <Pressable
           onPress={() => {
             console.log('Press');
           }}
-          style={{
-            backgroundColor: '#2563EB',
-            paddingVertical: 12,
-            borderRadius: 6,
-          }}
+          style={styles.viewDetailsButton}
         >
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontSize: 14,
-              fontWeight: '500',
-            }}
-          >
-            View Details
-          </Text>
-        </TouchableOpacity>
+          <Text style={styles.viewDetailsText}>View Details</Text>
+        </Pressable>
       </View>
     </View>
   );
@@ -190,5 +108,82 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 4,
+  },
+  imageContainer: {
+    position: 'relative',
+  },
+  vehicleImage: {
+    width: '100%',
+    height: 192,
+    objectFit: 'cover',
+  },
+  content: {
+    padding: 16,
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: '#111827',
+    marginBottom: 8,
+  },
+  detailsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginBottom: 16,
+  },
+  detailItem: {
+    width: '50%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  detailIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 4,
+  },
+  emojiIcon: {
+    width: 16,
+    height: 16,
+    marginRight: 4,
+    textAlign: 'center',
+  },
+  detailText: {
+    color: '#4B5563',
+    fontSize: 14,
+  },
+  bidContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 16,
+  },
+  bidLabel: {
+    color: '#4B5563',
+    fontSize: 14,
+  },
+  bidValueContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  bidIcon: {
+    width: 20,
+    height: 20,
+  },
+  bidValue: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#059669',
+  },
+  viewDetailsButton: {
+    backgroundColor: '#2563EB',
+    paddingVertical: 12,
+    borderRadius: 6,
+  },
+  viewDetailsText: {
+    color: 'white',
+    textAlign: 'center',
+    fontSize: 14,
+    fontWeight: '500',
   },
 });
