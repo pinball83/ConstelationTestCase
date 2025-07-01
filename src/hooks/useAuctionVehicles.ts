@@ -25,7 +25,7 @@ export function useAuctionVehicles(): {
               id: index,
               fuelType: vehicle.fuel,
               image: 'https://via.placeholder.com/150',
-              favorite: false,//todo add favorite to vehicles data from local storage
+              favorite: false, //todo add favorite to vehicles data from local storage
             } as Vehicle),
         );
 
@@ -36,7 +36,7 @@ export function useAuctionVehicles(): {
         setLoading(false);
       }
     }, 1000);
-  }, []); 
+  }, []);
 
   return { vehicles, isLoading: loading, error };
 }
