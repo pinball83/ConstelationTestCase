@@ -49,8 +49,8 @@ export default function CountDownBadge({
     <View
       style={[styles.container, { backgroundColor: colors.buttonBackground }]}
     >
-      <Clock style={styles.clockIcon} color="white" />
-      <Text style={[appStyles.body, styles.timeText]}>{timeLeft}</Text>
+      <Clock style={styles.clockIcon} color="black" />
+      <Text style={[appStyles.body]}>{timeLeft}</Text>
     </View>
   );
 }
@@ -70,8 +70,5 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     marginRight: 4,
-  },
-  timeText: {
-    color: 'white',
   },
 });
