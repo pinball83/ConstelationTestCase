@@ -1,5 +1,5 @@
 import { Heart } from 'lucide-react-native';
-import { TouchableOpacity, StyleSheet } from 'react-native';
+import { TouchableOpacity, StyleSheet, Pressable } from 'react-native';
 
 interface FavoriteButtonProps {
   isFavorite: boolean;
@@ -11,7 +11,7 @@ export const FavoriteButton = ({
   onToggleFavorite,
 }: FavoriteButtonProps) => {
   return (
-    <TouchableOpacity
+    <Pressable
       onPress={e => {
         e.preventDefault();
         onToggleFavorite();
@@ -23,7 +23,7 @@ export const FavoriteButton = ({
         color={isFavorite ? '#EF4444' : '#4B5563'}
         fill={isFavorite ? '#EF4444' : 'none'}
       />
-    </TouchableOpacity>
+    </Pressable>
   );
 };
 
