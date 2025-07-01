@@ -4,6 +4,7 @@ import { Vehicle } from '../../../types/Vehicle';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FavoriteButton } from './FavoriteButton';
 import CountDownBadge from './CountDownBadge';
+import { useTheme } from '../../../hooks/useTheme.ts';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -15,6 +16,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
   vehicle,
   onToggleFavorite,
 }) => {
+  const { colors, appStyles } = useTheme();
   const [isFavorite] = useState(vehicle.favorite);
   const locale = 'en-GB';
 
@@ -47,8 +49,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
 
       {/* Content */}
       <View style={styles.content}>
-        {/* Title */}
-        <Text style={styles.title}>
+        <Text style={[appStyles.h1, styles.title]}>
           {vehicle.year} {vehicle.make} {vehicle.model}
         </Text>
 
@@ -85,14 +86,18 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           </View>
         </View>
 
-        {/* View Details Button */}
         <Pressable
           onPress={() => {
             console.log('Press');
           }}
-          style={styles.viewDetailsButton}
+          style={[
+            styles.viewDetailsButton,
+            { backgroundColor: colors.buttonBackground },
+          ]}
         >
-          <Text style={styles.viewDetailsText}>View Details</Text>
+          <Text style={[appStyles.body, { textAlign: 'center' }]}>
+            View Details
+          </Text>
         </Pressable>
       </View>
     </View>
@@ -122,8 +127,6 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#111827',
     marginBottom: 8,
   },
   detailsGrid: {
@@ -176,7 +179,6 @@ const styles = StyleSheet.create({
     color: '#059669',
   },
   viewDetailsButton: {
-    backgroundColor: '#2563EB',
     paddingVertical: 12,
     borderRadius: 6,
   },

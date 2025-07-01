@@ -1,5 +1,5 @@
 import { Heart } from 'lucide-react-native';
-import { TouchableOpacity, StyleSheet, Pressable } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
 interface FavoriteButtonProps {
   isFavorite: boolean;
