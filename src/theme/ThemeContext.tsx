@@ -4,7 +4,6 @@ import { LightTheme } from './themes';
 
 export const ThemeContext = createContext(LightTheme);
 
-
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const scheme = useColorScheme();
   //todo: Remove eslint exclusion for exhaustive deps when dark theme is implemented
