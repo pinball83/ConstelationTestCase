@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Calendar, DollarSign, Fuel } from 'lucide-react-native';
+import { DollarSign } from 'lucide-react-native';
 import { Vehicle } from '../../../types/Vehicle';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FavoriteButton } from './FavoriteButton';
 import CountDownBadge from './CountDownBadge';
+import { VehicleDetailsGrid } from './VehicleDetailsGrid';
 import { useTheme } from '../../../hooks/useTheme.ts';
+import { formatPrice } from '../../../utils/formatters';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -18,20 +20,6 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
 }) => {
   const { colors, appStyles } = useTheme();
   const [isFavorite] = useState(vehicle.favorite);
-  const locale = 'en-GB';
-
-  const formatPrice = (price: number) => {
-    return new Intl.NumberFormat(locale, {
-      style: 'currency',
-      currency: 'EUR',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(price);
-  };
-
-  const formatMileage = (mileage: number) => {
-    return new Intl.NumberFormat(locale).format(mileage);
-  };
 
   return (
     <View style={styles.card}>
@@ -53,27 +41,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
           {vehicle.year} {vehicle.make} {vehicle.model}
         </Text>
 
-        {/* Details Grid */}
-        <View style={styles.detailsGrid}>
-          <View style={styles.detailItem}>
-            <Fuel style={styles.detailIcon} color="#4B5563" />
-            <Text style={styles.detailText}>{vehicle.fuelType}</Text>
-          </View>
-          <View style={styles.detailItem}>
-            <Text style={styles.emojiIcon}>🛣️</Text>
-            <Text style={styles.detailText}>
-              {formatMileage(vehicle.mileage)} mi
-            </Text>
-          </View>
-          <View style={styles.detailItem}>
-            <Text style={styles.emojiIcon}>⚙️</Text>
-            <Text style={styles.detailText}>{vehicle.engineSize}</Text>
-          </View>
-          <View style={styles.detailItem}>
-            <Calendar style={styles.detailIcon} color="#4B5563" />
-            <Text style={styles.detailText}>{vehicle.year}</Text>
-          </View>
-        </View>
+        <VehicleDetailsGrid vehicle={vehicle} />
 
         {/* Starting Bid */}
         <View style={styles.bidContainer}>
@@ -126,34 +94,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   title: {
-    fontSize: 20,
     marginBottom: 8,
-  },
-  detailsGrid: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginBottom: 16,
-  },
-  detailItem: {
-    width: '50%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 12,
-  },
-  detailIcon: {
-    width: 16,
-    height: 16,
-    marginRight: 4,
-  },
-  emojiIcon: {
-    width: 16,
-    height: 16,
-    marginRight: 4,
-    textAlign: 'center',
-  },
-  detailText: {
-    color: '#4B5563',
-    fontSize: 14,
   },
   bidContainer: {
     flexDirection: 'row',
@@ -181,11 +122,5 @@ const styles = StyleSheet.create({
   viewDetailsButton: {
     paddingVertical: 12,
     borderRadius: 6,
-  },
-  viewDetailsText: {
-    color: 'white',
-    textAlign: 'center',
-    fontSize: 14,
-    fontWeight: '500',
   },
 });
