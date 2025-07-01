@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/SpaceGrotesk/SpaceGrotesk-Bold.ttf",
+      "sha1": "14f3d7d974d0232f0fba31566783b2c262b4d2a2"
+    },
+    {
+      "path": "assets/fonts/SpaceGrotesk/SpaceGrotesk-Medium.ttf",
+      "sha1": "7d2fe2b9e0c9e76ab5bebf7cd766acd1d5c4dcbb"
+    }
+  ]
+}
