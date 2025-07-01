@@ -1,13 +1,11 @@
-export interface Vehicle {
-  id: number;
+export interface VehicleDTO {
   make: string;
   model: string;
   engineSize: string;
-  fuelType: string;
+  fuel: string;
   year: number;
   mileage: number;
   auctionDateTime: string;
   startingBid: number;
-  image: string;
-  favorite: boolean;
+  favourite: boolean;
 }
