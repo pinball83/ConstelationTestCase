@@ -25,7 +25,8 @@ export function useAuctionVehicles(): {
               ...vehicle,
               id: index,
               fuelType: vehicle.fuel,
-              image: 'https://via.placeholder.com/150',
+              image:
+                'https://images.unsplash.com/photo-1555215695-3004980ad54e?w=500&h=300&fit=crop"',
               auctionDateTime: parse(
                 vehicle.auctionDateTime,
                 'yyyy/MM/dd kk:mm:ss',
