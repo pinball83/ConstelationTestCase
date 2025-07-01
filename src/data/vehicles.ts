@@ -8,7 +8,7 @@ export const vehiclesData: VehicleDTO[] = [
     fuel: 'diesel',
     year: 2022,
     mileage: 743,
-    auctionDateTime: '2024/04/15 09:00:00',
+    auctionDateTime: '2025/07/15 09:00:00',
     startingBid: 17000,
     favourite: true,
   },
