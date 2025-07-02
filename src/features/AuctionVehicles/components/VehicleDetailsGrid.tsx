@@ -1,8 +1,9 @@
 import React from 'react';
-import { Calendar, Fuel } from 'lucide-react-native';
+import { Calendar, Fuel, Gauge, Settings } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { Vehicle } from '../../../types/Vehicle';
 import { formatMileage } from '../../../utils/formatters';
+import { useTheme } from '../../../hooks/useTheme.ts';
 
 interface VehicleDetailsGridProps {
   vehicle: Vehicle;
@@ -11,25 +12,32 @@ interface VehicleDetailsGridProps {
 export const VehicleDetailsGrid: React.FC<VehicleDetailsGridProps> = ({
   vehicle,
 }) => {
+  const { colors, appStyles } = useTheme();
   return (
     <View style={styles.detailsGrid}>
       <View style={styles.detailItem}>
-        <Fuel style={styles.detailIcon} color="#4B5563" />
-        <Text style={styles.detailText}>{vehicle.fuelType}</Text>
-      </View>
-      <View style={styles.detailItem}>
-        <Text style={styles.emojiIcon}>🛣️</Text>
-        <Text style={styles.detailText}>
-          {formatMileage(vehicle.mileage)} mi
+        <Fuel style={styles.detailIcon} color={colors.secondaryText} />
+        <Text style={[appStyles.body, { color: colors.secondaryText }]}>
+          {vehicle.fuelType.charAt(0).toUpperCase() + vehicle.fuelType.slice(1)}
         </Text>
       </View>
       <View style={styles.detailItem}>
-        <Text style={styles.emojiIcon}>⚙️</Text>
-        <Text style={styles.detailText}>{vehicle.engineSize}</Text>
+        <Gauge style={styles.detailIcon} color={colors.secondaryText} />
+        <Text style={[appStyles.body, { color: colors.secondaryText }]}>
+          {formatMileage(vehicle.mileage)} km
+        </Text>
       </View>
       <View style={styles.detailItem}>
-        <Calendar style={styles.detailIcon} color="#4B5563" />
-        <Text style={styles.detailText}>{vehicle.year}</Text>
+        <Settings style={styles.detailIcon} color={colors.secondaryText} />
+        <Text style={[appStyles.body, { color: colors.secondaryText }]}>
+          {vehicle.engineSize}
+        </Text>
+      </View>
+      <View style={styles.detailItem}>
+        <Calendar style={styles.detailIcon} color={colors.secondaryText} />
+        <Text style={[appStyles.body, { color: colors.secondaryText }]}>
+          {vehicle.year}
+        </Text>
       </View>
     </View>
   );
@@ -51,15 +59,5 @@ const styles = StyleSheet.create({
     width: 16,
     height: 16,
     marginRight: 4,
-  },
-  emojiIcon: {
-    width: 16,
-    height: 16,
-    marginRight: 4,
-    textAlign: 'center',
-  },
-  detailText: {
-    color: '#4B5563',
-    fontSize: 14,
   },
 });
