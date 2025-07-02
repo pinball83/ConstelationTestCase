@@ -1,5 +1,4 @@
 import React from 'react';
-import { DollarSign, Euro } from 'lucide-react-native';
 import { StyleSheet, Text, View } from 'react-native';
 import { formatPrice } from '../../../utils/formatters';
 import { useTheme } from '../../../hooks/useTheme.ts';
