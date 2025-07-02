@@ -7,7 +7,7 @@ import { Vehicle } from '../../types/Vehicle.ts';
 import { useAuctionVehicles } from '../../hooks/useAuctionVehicles.ts';
 
 export const AuctionVehiclesScreen = () => {
-  const { appStyles } = useTheme();
+  const { colors, appStyles } = useTheme();
   const insets = useSafeAreaInsets();
 
   const { vehicles, isLoading, error } = useAuctionVehicles();
@@ -44,6 +44,7 @@ export const AuctionVehiclesScreen = () => {
           paddingBottom: insets.bottom,
           paddingLeft: insets.left,
           paddingRight: insets.right,
+          backgroundColor: colors.secondaryBackground,
         },
       ]}
     >
@@ -51,11 +52,13 @@ export const AuctionVehiclesScreen = () => {
         data={vehicles}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
-          <VehicleCard
-            vehicle={item}
-            onPress={handleAccommodationPress}
-            onToggleFavorite={handleToggleFavorite}
-          />
+          <View style={styles.card}>
+            <VehicleCard
+              vehicle={item}
+              onPress={handleAccommodationPress}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          </View>
         )}
       />
     </View>
@@ -72,5 +75,15 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  card: {
+    paddingBottom: 16,
+    borderRadius: 8,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    paddingHorizontal: 16,
   },
 });

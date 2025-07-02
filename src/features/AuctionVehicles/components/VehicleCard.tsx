@@ -77,6 +77,8 @@ const styles = StyleSheet.create({
     width: '100%',
     height: 192,
     objectFit: 'cover',
+    borderTopLeftRadius: 8,
+    borderTopRightRadius: 8,
   },
   content: {
     padding: 16,
