@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-import { DollarSign } from 'lucide-react-native';
 import { Vehicle } from '../../../types/Vehicle';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FavoriteButton } from './FavoriteButton';
 import CountDownBadge from './CountDownBadge';
 import { VehicleDetailsGrid } from './VehicleDetailsGrid';
+import { StartingBid } from './StartingBid';
 import { useTheme } from '../../../hooks/useTheme.ts';
-import { formatPrice } from '../../../utils/formatters';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
@@ -23,7 +22,6 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
 
   return (
     <View style={styles.card}>
-      {/* Image Container */}
       <View style={styles.imageContainer}>
         <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} />
 
@@ -35,7 +33,6 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         <CountDownBadge auctionStartDate={vehicle.auctionDateTime} />
       </View>
 
-      {/* Content */}
       <View style={styles.content}>
         <Text style={[appStyles.h1, styles.title]}>
           {vehicle.year} {vehicle.make} {vehicle.model}
@@ -43,16 +40,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
 
         <VehicleDetailsGrid vehicle={vehicle} />
 
-        {/* Starting Bid */}
-        <View style={styles.bidContainer}>
-          <Text style={styles.bidLabel}>Starting Bid:</Text>
-          <View style={styles.bidValueContainer}>
-            <DollarSign style={styles.bidIcon} color="#059669" />
-            <Text style={styles.bidValue}>
-              {formatPrice(vehicle.startingBid).slice(1)}
-            </Text>
-          </View>
-        </View>
+        <StartingBid startingBid={vehicle.startingBid} />
 
         <Pressable
           onPress={() => {
@@ -95,29 +83,6 @@ const styles = StyleSheet.create({
   },
   title: {
     marginBottom: 8,
-  },
-  bidContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 16,
-  },
-  bidLabel: {
-    color: '#4B5563',
-    fontSize: 14,
-  },
-  bidValueContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  bidIcon: {
-    width: 20,
-    height: 20,
-  },
-  bidValue: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#059669',
   },
   viewDetailsButton: {
     paddingVertical: 12,
