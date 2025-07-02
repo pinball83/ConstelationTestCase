@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Filter, Trash2 } from 'lucide-react-native';
 import { useTheme } from '../../../hooks/useTheme';
+import { useFilterStore } from '../../../store/filtersStore.ts';
 
 interface FilterState {
   make: string;
@@ -11,33 +12,21 @@ interface FilterState {
   favoritesOnly: boolean;
 }
 
-interface VehicleFiltersProps {
-  filters: FilterState;
-  onFiltersChange: (filters: FilterState) => void;
-}
-
-export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
-  filters,
-  onFiltersChange,
-}) => {
+export const VehicleFilters = () => {
   const { colors, appStyles } = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
+  const { filters, setFilters, clearFilters } = useFilterStore();
 
   const updateFilter = (key: keyof FilterState, value: string | boolean) => {
-    onFiltersChange({
+    console.log(`Updating filter: ${key} = ${value}`);
+    setFilters({
       ...filters,
       [key]: value,
     });
   };
 
-  const clearFilters = () => {
-    onFiltersChange({
-      make: '',
-      model: '',
-      minBid: '',
-      maxBid: '',
-      favoritesOnly: false,
-    });
+  const handleClearFilters = () => {
+    clearFilters();
   };
 
   const hasActiveFilters =
@@ -67,7 +56,7 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
           )}
         </View>
         {hasActiveFilters && (
-          <Pressable onPress={clearFilters} style={styles.clearButton}>
+          <Pressable onPress={handleClearFilters} style={styles.clearButton}>
             <Trash2 size={16} style={styles.trashIcon} />
             <Text style={appStyles.body}>Clear filters</Text>
           </Pressable>
@@ -96,6 +85,7 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
             />
           </View>
 
+          {/* Model Filter */}
           <View style={styles.filterGroup}>
             <Text style={[appStyles.body, { marginBottom: 8 }]}>Model</Text>
             <TextInput
@@ -114,6 +104,7 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
             />
           </View>
 
+          {/* Bid Range */}
           <View style={styles.filterGroup}>
             <Text style={[appStyles.body, { marginBottom: 8 }]}>
               Starting Bid Range
@@ -160,6 +151,7 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
             </View>
           </View>
 
+          {/* Favorites Only */}
           <View style={styles.filterGroup}>
             <Pressable
               style={styles.favoritesToggle}

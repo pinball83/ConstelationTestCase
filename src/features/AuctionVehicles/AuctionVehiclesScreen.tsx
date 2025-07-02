@@ -13,36 +13,6 @@ export const AuctionVehiclesScreen = () => {
 
   const { vehicles, isLoading, error } = useAuctionVehicles();
   const { toggleFavorite } = useFavoritesVehicleStore();
-  // const [filters, setFilters] = useState<FilterState>({
-  //   make: '',
-  //   model: '',
-  //   minBid: '',
-  //   maxBid: '',
-  //   favoritesOnly: false,
-  // });
-
-  // const filteredVehicles = useMemo(() => {
-  //   return vehicles.filter(vehicle => {
-  //     if (
-  //       filters.make &&
-  //       vehicle.make.toLowerCase() !== filters.make.toLowerCase()
-  //     ) {
-  //       return false;
-  //     }
-  //
-  //     if (
-  //       filters.model &&
-  //       vehicle.model.toLowerCase() !== filters.model.toLowerCase()
-  //     ) {
-  //       return false;
-  //     }
-  //
-  //     if (filters.minBid) {
-  //       const minBid = parseFloat(filters.minBid);
-  //       if (isNaN(minBid) || vehicle.startingBid < minBid) {
-  //         return false;
-  //       }
-  //     }
 
   const handleAuctionDetailsPress = (vehicle: Vehicle) => {
     console.log(`Vehicle press: ${vehicle}`);
@@ -80,7 +50,7 @@ export const AuctionVehiclesScreen = () => {
         },
       ]}
     >
-      {/*<VehicleFilters filters={filters} onFiltersChange={setFilters} />*/}
+      <VehicleFilters />
 
       <FlatList
         data={vehicles}
