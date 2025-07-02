@@ -12,7 +12,7 @@ import { Vehicle } from '../../types/Vehicle.ts';
 import { useRoute } from '@react-navigation/native';
 import { formatPrice } from '../../utils/formatters.ts';
 
-export const AuctionVechileDetailsScreen = () => {
+export const AuctionVehicleDetailsScreen = () => {
   const { colors, appStyles } = useTheme();
   const route = useRoute();
   const { vehicle } = route.params as { vehicle: Vehicle };
@@ -24,7 +24,9 @@ export const AuctionVechileDetailsScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} />
 
-        <Text style={[appStyles.h1, styles.title]}>{vehicle.model}</Text>
+        <Text style={[appStyles.h1, styles.title]}>
+          {`${vehicle.make} ${vehicle.model}`}
+        </Text>
         <Text style={[appStyles.body, styles.specs]}>
           Engine: {vehicle.engineSize} | Fuel: {vehicle.fuelType} | Mileage:{' '}
           {vehicle.mileage}
