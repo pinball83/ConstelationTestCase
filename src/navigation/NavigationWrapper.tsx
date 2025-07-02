@@ -7,6 +7,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { AuctionVehiclesScreen } from '../features/AuctionVehicles/AuctionVehiclesScreen';
 import { useTheme } from '../hooks/useTheme.ts';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { AuctionVechileDetailsScreen } from '../features/AuctionVechileDetails/AuctionVechileDetailsScreen.tsx';
 
 const Stack = createNativeStackNavigator();
 
@@ -22,6 +23,10 @@ export const NavigationWrapper = () => {
           <Stack.Screen
             name="AuctionVehicles"
             component={AuctionVehiclesScreen}
+          />
+          <Stack.Screen
+            name="Details"
+            component={AuctionVechileDetailsScreen}
           />
         </Stack.Navigator>
       </NavigationContainer>

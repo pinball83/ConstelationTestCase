@@ -6,16 +6,24 @@ import { VehicleFilters } from './components/VehicleFilters';
 import { Vehicle } from '../../types/Vehicle.ts';
 import { useFavoritesVehicleStore } from '../../store/favoritesVehicleStore.ts';
 import { useAuctionVehicles } from '../../hooks/useAuctionVehicles.ts';
+import { RootStackParamList } from '../../navigation/RootStackParamList.ts';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { useNavigation } from '@react-navigation/native';
+
+type VehicleScreenNavigationProp = NativeStackNavigationProp<
+  RootStackParamList,
+  'AuctionVehicles'
+>;
 
 export const AuctionVehiclesScreen = () => {
   const { colors, appStyles } = useTheme();
   const insets = useSafeAreaInsets();
-
+  const navigation = useNavigation<VehicleScreenNavigationProp>();
   const { vehicles, isLoading, error } = useAuctionVehicles();
   const { toggleFavorite } = useFavoritesVehicleStore();
 
   const handleAuctionDetailsPress = (vehicle: Vehicle) => {
-    console.log(`Vehicle press: ${vehicle}`);
+    navigation.navigate('Details', { vehicle: vehicle });
   };
 
   const handleToggleFavorite = (vehicle: Vehicle): void => {
