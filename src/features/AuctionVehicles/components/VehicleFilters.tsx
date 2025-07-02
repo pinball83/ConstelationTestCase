@@ -14,15 +14,11 @@ interface FilterState {
 interface VehicleFiltersProps {
   filters: FilterState;
   onFiltersChange: (filters: FilterState) => void;
-  availableMakes: string[];
-  availableModels: string[];
 }
 
 export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
   filters,
   onFiltersChange,
-  availableMakes,
-  availableModels,
 }) => {
   const { colors, appStyles } = useTheme();
   const [isExpanded, setIsExpanded] = useState(false);
@@ -100,7 +96,6 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
             />
           </View>
 
-          {/* Model Filter */}
           <View style={styles.filterGroup}>
             <Text style={[appStyles.body, { marginBottom: 8 }]}>Model</Text>
             <TextInput
@@ -119,7 +114,6 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
             />
           </View>
 
-          {/* Bid Range */}
           <View style={styles.filterGroup}>
             <Text style={[appStyles.body, { marginBottom: 8 }]}>
               Starting Bid Range
@@ -166,7 +160,6 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
             </View>
           </View>
 
-          {/* Favorites Only */}
           <View style={styles.filterGroup}>
             <Pressable
               style={styles.favoritesToggle}
@@ -185,9 +178,7 @@ export const VehicleFilters: React.FC<VehicleFiltersProps> = ({
                   },
                 ]}
               />
-              <Text
-                style={[appStyles.body, { color: colors.text, marginLeft: 12 }]}
-              >
+              <Text style={[appStyles.body, { marginLeft: 12 }]}>
                 Show favorites only
               </Text>
             </Pressable>

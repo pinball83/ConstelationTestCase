@@ -28,21 +28,8 @@ export const AuctionVehiclesScreen = () => {
     favoritesOnly: false,
   });
 
-  // Extract unique makes and models for filter options
-  const availableMakes = useMemo(() => {
-    const makes = [...new Set(vehicles.map(vehicle => vehicle.make))];
-    return makes.sort();
-  }, [vehicles]);
-
-  const availableModels = useMemo(() => {
-    const models = [...new Set(vehicles.map(vehicle => vehicle.model))];
-    return models.sort();
-  }, [vehicles]);
-
-  // Filter vehicles based on current filters
   const filteredVehicles = useMemo(() => {
     return vehicles.filter(vehicle => {
-      // Make filter
       if (
         filters.make &&
         vehicle.make.toLowerCase() !== filters.make.toLowerCase()
@@ -50,7 +37,6 @@ export const AuctionVehiclesScreen = () => {
         return false;
       }
 
-      // Model filter
       if (
         filters.model &&
         vehicle.model.toLowerCase() !== filters.model.toLowerCase()
@@ -58,7 +44,6 @@ export const AuctionVehiclesScreen = () => {
         return false;
       }
 
-      // Min bid filter
       if (filters.minBid) {
         const minBid = parseFloat(filters.minBid);
         if (isNaN(minBid) || vehicle.startingBid < minBid) {
@@ -66,7 +51,6 @@ export const AuctionVehiclesScreen = () => {
         }
       }
 
-      // Max bid filter
       if (filters.maxBid) {
         const maxBid = parseFloat(filters.maxBid);
         if (isNaN(maxBid) || vehicle.startingBid > maxBid) {
@@ -74,12 +58,7 @@ export const AuctionVehiclesScreen = () => {
         }
       }
 
-      // Favorites filter
-      if (filters.favoritesOnly && !vehicle.favorite) {
-        return false;
-      }
-
-      return true;
+      return !(filters.favoritesOnly && !vehicle.favorite);
     });
   }, [vehicles, filters]);
 
@@ -119,12 +98,7 @@ export const AuctionVehiclesScreen = () => {
         },
       ]}
     >
-      <VehicleFilters
-        filters={filters}
-        onFiltersChange={setFilters}
-        availableMakes={availableMakes}
-        availableModels={availableModels}
-      />
+      <VehicleFilters filters={filters} onFiltersChange={setFilters} />
 
       <FlatList
         data={filteredVehicles}
