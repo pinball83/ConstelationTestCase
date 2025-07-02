@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Vehicle } from '../../../types/Vehicle';
 import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import { FavoriteButton } from './FavoriteButton';
@@ -9,16 +9,17 @@ import { useTheme } from '../../../hooks/useTheme.ts';
 
 interface VehicleCardProps {
   vehicle: Vehicle;
-  onToggleFavorite: (vehicleId: number) => void;
+  onToggleFavorite: (vehicle: Vehicle) => void;
   onPress: (vehicle: Vehicle) => void;
 }
 
 export const VehicleCard: React.FC<VehicleCardProps> = ({
   vehicle,
   onToggleFavorite,
+  onPress,
 }) => {
   const { colors, appStyles } = useTheme();
-  const [isFavorite] = useState(vehicle.favorite);
+  const isFavorite = vehicle?.favorite || false;
 
   return (
     <View style={styles.card}>
@@ -27,7 +28,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
 
         <FavoriteButton
           isFavorite={isFavorite}
-          onToggleFavorite={() => onToggleFavorite(vehicle.id)}
+          onToggleFavorite={() => onToggleFavorite(vehicle)}
         />
 
         <CountDownBadge auctionStartDate={vehicle.auctionDateTime} />
@@ -43,9 +44,7 @@ export const VehicleCard: React.FC<VehicleCardProps> = ({
         <StartingBid startingBid={vehicle.startingBid} />
 
         <Pressable
-          onPress={() => {
-            console.log('Press');
-          }}
+          onPress={() => onPress(vehicle)}
           style={[
             styles.viewDetailsButton,
             { backgroundColor: colors.buttonBackground },

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { vehiclesData } from '../data/vehicles';
 import { Vehicle } from '../types/Vehicle';
 import { parse } from 'date-fns';
+import { useFavoritesVehicleStore } from '../store/favoritesVehicleStore.ts';
 
 export function useAuctionVehicles(): {
   vehicles: Vehicle[];
@@ -45,5 +46,12 @@ export function useAuctionVehicles(): {
     }, 1000);
   }, []);
 
-  return { vehicles, isLoading: loading, error };
+  const { vehicles: favorites } = useFavoritesVehicleStore();
+
+  const merged = [
+    ...favorites,
+    ...vehicles.filter(v => !favorites.some(f => f.id === v.id)),
+  ];
+
+  return { vehicles: merged, isLoading: loading, error };
 }

@@ -1,74 +1,56 @@
 import { FlatList, StyleSheet, Text, View } from 'react-native';
-import { useState, useMemo } from 'react';
 import { useTheme } from '../../hooks/useTheme';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { VehicleCard } from './components/VehicleCard.tsx';
 import { VehicleFilters } from './components/VehicleFilters';
 import { Vehicle } from '../../types/Vehicle.ts';
+import { useFavoritesVehicleStore } from '../../store/favoritesVehicleStore.ts';
 import { useAuctionVehicles } from '../../hooks/useAuctionVehicles.ts';
-
-interface FilterState {
-  make: string;
-  model: string;
-  minBid: string;
-  maxBid: string;
-  favoritesOnly: boolean;
-}
 
 export const AuctionVehiclesScreen = () => {
   const { colors, appStyles } = useTheme();
   const insets = useSafeAreaInsets();
 
   const { vehicles, isLoading, error } = useAuctionVehicles();
-  const [filters, setFilters] = useState<FilterState>({
-    make: '',
-    model: '',
-    minBid: '',
-    maxBid: '',
-    favoritesOnly: false,
-  });
+  const { toggleFavorite } = useFavoritesVehicleStore();
+  // const [filters, setFilters] = useState<FilterState>({
+  //   make: '',
+  //   model: '',
+  //   minBid: '',
+  //   maxBid: '',
+  //   favoritesOnly: false,
+  // });
 
-  const filteredVehicles = useMemo(() => {
-    return vehicles.filter(vehicle => {
-      if (
-        filters.make &&
-        vehicle.make.toLowerCase() !== filters.make.toLowerCase()
-      ) {
-        return false;
-      }
+  // const filteredVehicles = useMemo(() => {
+  //   return vehicles.filter(vehicle => {
+  //     if (
+  //       filters.make &&
+  //       vehicle.make.toLowerCase() !== filters.make.toLowerCase()
+  //     ) {
+  //       return false;
+  //     }
+  //
+  //     if (
+  //       filters.model &&
+  //       vehicle.model.toLowerCase() !== filters.model.toLowerCase()
+  //     ) {
+  //       return false;
+  //     }
+  //
+  //     if (filters.minBid) {
+  //       const minBid = parseFloat(filters.minBid);
+  //       if (isNaN(minBid) || vehicle.startingBid < minBid) {
+  //         return false;
+  //       }
+  //     }
 
-      if (
-        filters.model &&
-        vehicle.model.toLowerCase() !== filters.model.toLowerCase()
-      ) {
-        return false;
-      }
-
-      if (filters.minBid) {
-        const minBid = parseFloat(filters.minBid);
-        if (isNaN(minBid) || vehicle.startingBid < minBid) {
-          return false;
-        }
-      }
-
-      if (filters.maxBid) {
-        const maxBid = parseFloat(filters.maxBid);
-        if (isNaN(maxBid) || vehicle.startingBid > maxBid) {
-          return false;
-        }
-      }
-
-      return !(filters.favoritesOnly && !vehicle.favorite);
-    });
-  }, [vehicles, filters]);
-
-  const handleAccommodationPress = (vehicle: Vehicle) => {
+  const handleAuctionDetailsPress = (vehicle: Vehicle) => {
     console.log(`Vehicle press: ${vehicle}`);
   };
 
-  function handleToggleFavorite(vehicleId: number): void {
-    console.log(`Vehicle press: ${vehicleId}`);
-  }
+  const handleToggleFavorite = (vehicle: Vehicle): void => {
+    toggleFavorite(vehicle);
+  };
 
   if (isLoading) {
     return (
@@ -98,16 +80,16 @@ export const AuctionVehiclesScreen = () => {
         },
       ]}
     >
-      <VehicleFilters filters={filters} onFiltersChange={setFilters} />
+      {/*<VehicleFilters filters={filters} onFiltersChange={setFilters} />*/}
 
       <FlatList
-        data={filteredVehicles}
+        data={vehicles}
         keyExtractor={item => item.id.toString()}
         renderItem={({ item }) => (
           <View style={styles.card}>
             <VehicleCard
               vehicle={item}
-              onPress={handleAccommodationPress}
+              onPress={handleAuctionDetailsPress}
               onToggleFavorite={handleToggleFavorite}
             />
           </View>
