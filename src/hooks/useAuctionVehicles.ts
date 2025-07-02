@@ -72,10 +72,10 @@ export function useAuctionVehicles(): {
         }
       }
 
-      //fixme: not working properly
-      // if (!(filters.favoritesOnly && vehicle.favorite)) {
-      //   return false;
-      // }
+      if (filters.favoritesOnly) {
+        return vehicle.favorite;
+      }
+
       return true;
     });
   }, [vehicles, filters]);
