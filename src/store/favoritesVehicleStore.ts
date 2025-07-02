@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { Vehicle } from '../types/Vehicle';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface FavoritesVehicleStore {
   // State
@@ -8,6 +9,7 @@ interface FavoritesVehicleStore {
 
   // Actions
   toggleFavorite: (vehicle: Vehicle) => void;
+  getFavorites: () => Vehicle[];
 }
 
 export const useFavoritesVehicleStore = create<FavoritesVehicleStore>()(
@@ -22,10 +24,18 @@ export const useFavoritesVehicleStore = create<FavoritesVehicleStore>()(
 
         if (vehicle.favorite)
           updatedVehicles = vehicles.filter(v => v.id !== vehicle.id);
-        else updatedVehicles.push({ ...vehicle, favorite: !vehicle.favorite });
+        else updatedVehicles.push({ ...vehicle, favorite: true });
         set({ vehicles: updatedVehicles });
       },
+
+      getFavorites: () => {
+        const { vehicles } = get();
+        return vehicles;
+      },
     }),
-    { name: 'favorites-vehicle-storage' },
+    {
+      name: 'favorites-vehicle-storage',
+      storage: createJSONStorage(() => AsyncStorage),
+    },
   ),
 );
