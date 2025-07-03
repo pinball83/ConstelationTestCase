@@ -49,8 +49,16 @@ export function useAuctionVehicles(): {
 
   const { vehicles: favorites } = useFavoritesVehicleStore();
   const { filters } = useFilterStore();
+
+  const merged = useMemo(() => {
+    return vehicles.map(vehicle => {
+      const fav = favorites.find(f => f.id === vehicle.id);
+      return fav ? fav : vehicle;
+    });
+  }, [favorites, vehicles]);
+
   const filteredVehicles: Vehicle[] = useMemo(() => {
-    return vehicles.filter(vehicle => {
+    return merged.filter(vehicle => {
       if (
         filters.make &&
         vehicle.make.toLowerCase() !== filters.make.toLowerCase()
@@ -78,12 +86,13 @@ export function useAuctionVehicles(): {
 
       return true;
     });
-  }, [vehicles, filters]);
+  }, [
+    merged,
+    filters.make,
+    filters.model,
+    filters.minBid,
+    filters.favoritesOnly,
+  ]);
 
-  const merged = filteredVehicles.map(vehicle => {
-    const fav = favorites.find(f => f.id === vehicle.id);
-    return fav ? fav : vehicle;
-  });
-
-  return { vehicles: merged, isLoading: loading, error };
+  return { vehicles: filteredVehicles, isLoading: loading, error };
 }
