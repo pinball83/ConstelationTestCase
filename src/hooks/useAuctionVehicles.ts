@@ -34,7 +34,7 @@ export function useAuctionVehicles(): {
                 'yyyy/MM/dd kk:mm:ss',
                 new Date(),
               ),
-              favorite: false, //todo add favorite to vehicles data from local storage
+              favorite: false,
             } as Vehicle),
         );
 
@@ -79,14 +79,11 @@ export function useAuctionVehicles(): {
       return true;
     });
   }, [vehicles, filters]);
-  console.log('filteredVehicles', filteredVehicles);
-  console.log('favorites', favorites);
-  console.log('filters', filters);
 
-  const merged = [
-    ...favorites,
-    ...filteredVehicles.filter(v => !favorites.some(f => f.id === v.id)),
-  ];
+  const merged = filteredVehicles.map(vehicle => {
+    const fav = favorites.find(f => f.id === vehicle.id);
+    return fav ? fav : vehicle;
+  });
 
   return { vehicles: merged, isLoading: loading, error };
 }
