@@ -19,7 +19,10 @@ export const AuctionVehicleDetailsScreen = () => {
 
   return (
     <View
-      style={[styles.root, { backgroundColor: colors.secondaryBackground }]}
+      style={[
+        appStyles.container,
+        { backgroundColor: colors.secondaryBackground },
+      ]}
     >
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <Image source={{ uri: vehicle.image }} style={styles.vehicleImage} />
@@ -86,28 +89,6 @@ export const AuctionVehicleDetailsScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
-  },
-  header: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    paddingTop: 8,
-    paddingBottom: 8,
-    backgroundColor: 'transparent',
-    justifyContent: 'space-between',
-  },
-  backButton: {
-    width: 32,
-    height: 32,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  backIcon: {
-    fontSize: 24,
-    color: '#101418',
-  },
   headerTitle: {
     flex: 1,
     textAlign: 'center',
